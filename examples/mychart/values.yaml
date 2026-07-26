@@ -1,0 +1,29 @@
+# Sample Helm values with @schema annotations.
+# Regenerate the schema with:
+#   helm-values-schema gen examples/mychart/values.yaml -o examples/mychart/values.schema.json
+
+replicaCount: 1  # @schema required: true; minimum: 1
+
+image:
+  repository: nginx  # @schema required: true
+  tag: "1.25"        # @schema pattern: "^[0-9]+\\.[0-9]+"
+  pullPolicy: IfNotPresent  # @schema enum: [Always, Never, IfNotPresent]
+
+service:
+  type: ClusterIP  # @schema enum: [ClusterIP, NodePort, LoadBalancer]
+  port: 80         # @schema minimum: 1; maximum: 65535
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 128Mi
+
+ingress:
+  enabled: false
+  hosts:
+    - host: example.com
+      paths:
+        - /
+
+nodeSelector: {}
+tolerations: []

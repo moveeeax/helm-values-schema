@@ -1,0 +1,53 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Test
+        run: pytest -q
+
+      - name: Smoke — version
+        run: helm-values-schema --version
+
+      - name: Smoke — gen is reproducible
+        run: |
+          helm-values-schema gen examples/mychart/values.yaml -o /tmp/values.schema.json
+          diff -u examples/mychart/values.schema.json /tmp/values.schema.json
+
+      - name: Smoke — validate values against schema (exit 0)
+        run: helm-values-schema validate examples/mychart
+
+      - name: Smoke — validate good override (exit 0)
+        run: helm-values-schema validate examples/mychart -f examples/overrides.yaml
+
+      - name: Smoke — validate bad override (exit 1)
+        run: |
+          if helm-values-schema validate examples/mychart -f examples/bad-overrides.yaml; then
+            echo "expected non-zero exit for an invalid override" >&2
+            exit 1
+          fi

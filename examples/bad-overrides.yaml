@@ -1,0 +1,6 @@
+# Three deliberate mistakes: replicaCount below minimum, an unknown service
+# type, and a port outside the valid range. `validate` exits non-zero on these.
+replicaCount: 0
+service:
+  type: Invalid
+  port: 70000

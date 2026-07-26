@@ -1,0 +1,5 @@
+# A well-formed partial override: passes `helm-values-schema validate`.
+replicaCount: 3
+service:
+  type: NodePort
+  port: 8080
