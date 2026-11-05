@@ -1,7 +1,7 @@
 # helm-values-schema
 
 [![ci](https://github.com/moveeeax/helm-values-schema/actions/workflows/ci.yml/badge.svg)](https://github.com/moveeeax/helm-values-schema/actions/workflows/ci.yml)
-[![python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
+[![python](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
 [![license: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 Give your Helm chart a `values.schema.json` so bad overrides fail fast — before
@@ -15,11 +15,23 @@ this tool generates that file and gives you the same check in CI.
 
 ## Install
 
+The package is not published on PyPI; install it straight from GitHub:
+
 ```bash
-pip install -e .
-# or, from a checkout, for development:
+pip install git+https://github.com/moveeeax/helm-values-schema
+# or pin a release tag:
+pip install git+https://github.com/moveeeax/helm-values-schema@v0.1.0
+```
+
+For development, from a checkout:
+
+```bash
+git clone https://github.com/moveeeax/helm-values-schema
+cd helm-values-schema
 pip install -e ".[dev]"
 ```
+
+Requires Python 3.11+.
 
 ## Usage
 
