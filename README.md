@@ -100,3 +100,7 @@ make example   # regenerate + validate the example schema
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+---
+
+**Archived on 2026-11-05.** losisin/helm-values-schema-json (Helm plugin + GitHub Action, inline-comment annotations, multiple values files) and dadav/helm-schema already cover generate-and-validate; this repo's only difference is being a Python CLI. If kept, the features below are the ones that would give it an angle.
